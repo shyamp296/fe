@@ -13,7 +13,7 @@ const UserList = () => {
 
   useEffect(() => {
     fetchUsers();
-  }, [page, limit ,search ]);
+  }, [page, limit, search]);
 
   const fetchUsers = async () => {
     try {
@@ -26,6 +26,7 @@ const UserList = () => {
       console.error(error);
     }
   };
+
   const handleInputChange = (event) => {
     setSearch(event.target.value);
   };
@@ -40,26 +41,31 @@ const UserList = () => {
   };
 
   const handleExport = () => {
-    axios.get('https://mernstack2-bq2z.onrender.com/exportCsv', { responseType: 'blob' })
+    axios
+      .get("https://mernstack2-bq2z.onrender.com/exportCsv", {
+        responseType: "blob",
+      })
       .then((response) => {
         const url = window.URL.createObjectURL(new Blob([response.data]));
-        const link = document.createElement('a');
+        const link = document.createElement("a");
         link.href = url;
-        link.setAttribute('download', 'export.csv');
+        link.setAttribute("download", "export.csv");
         document.body.appendChild(link);
         link.click();
       })
       .catch((error) => {
-        console.error('Error exporting data to CSV:', error);
+        console.error("Error exporting data to CSV:", error);
       });
-  }
+  };
 
   const handleDelete = async (id) => {
     try {
       console.log("Delete item with ID:", id);
-      const response = await axios.delete(`https://mernstack2-bq2z.onrender.com/users/${id}`);
+      const response = await axios.delete(
+        `https://mernstack2-bq2z.onrender.com/users/${id}`
+      );
       console.log(response.data);
-      fetchUsers()
+      fetchUsers();
       setUsers((prevUsers) => prevUsers.filter((user) => user._id !== id));
     } catch (error) {
       console.error("Error deleting item:", error);
@@ -68,21 +74,26 @@ const UserList = () => {
 
   return (
     <>
-      <div className="my-3">
-        <Row className="justify-content-between">
-          <Col xs={10} sm={6} md={6} lg={6}>
+      <div className="my-4 ">
+        <Row className="justify-content-between mx-5">
+          <Col
+            xs={12}
+            md={8}
+            lg={6}
+            className="d-flex flex-row justify-content-center justify-content-md-start"
+          >
             <input
-              className=" ml-5 "
+              className="w-100 w-md-75 mx-3 form-control"
               type="text"
               value={search}
               onChange={handleInputChange}
               placeholder="Search Here..."
             />
-            <Button type="submit" variant="danger" className="mx-2">
+            <Button type="submit" variant="danger" className="">
               Search
             </Button>
           </Col>
-          <Col xs={12} sm={6} md={6} lg={6} className="text-right">
+          <Col xs={12} md={4} lg={6} className="text-right">
             <Button
               type="submit"
               variant="danger"
@@ -146,7 +157,11 @@ const UserList = () => {
                           <img
                             src={`https://mernstack2-bq2z.onrender.com/${user.profile}`}
                             alt="Profile"
-                            style={{ height: "40px", width: "40px" , borderRadius : "50%" }}
+                            style={{
+                              height: "40px",
+                              width: "40px",
+                              borderRadius: "50%",
+                            }}
                           />
                         )}
                       </td>
@@ -162,7 +177,12 @@ const UserList = () => {
                             >
                               Edit
                             </Dropdown.Item>
-                            <Dropdown.Item>View</Dropdown.Item>
+                            <Dropdown.Item
+                              as={Link}
+                              to={`/userDetail/${user._id}`}
+                            >
+                              View
+                            </Dropdown.Item>
                             <Dropdown.Item
                               onClick={() => handleDelete(user._id)}
                             >
