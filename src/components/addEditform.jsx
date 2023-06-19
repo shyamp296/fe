@@ -2,6 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Card, Col, Form, Row } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { useFormik } from "formik";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+
 import * as Yup from "yup";
 import "./MyButton.css";
 import axios from "axios";
@@ -19,7 +23,9 @@ const RegistrationForm = () => {
 
   const fetchUser = async () => {
     try {
-      const response = await axios.get(`https://mernstack2-bq2z.onrender.com/users/${id}`);
+      const response = await axios.get(
+        `https://mernstack2-bq2z.onrender.com/users/${id}`
+      );
       setUser(response.data.data);
       console.log(response.data.data);
       formik.setValues(response.data.data);
@@ -54,20 +60,37 @@ const RegistrationForm = () => {
   const onSubmit = async (values) => {
     try {
       if (id) {
-        await axios.put(`https://mernstack2-bq2z.onrender.com/users/${id}`, values, {
-          headers: { "Content-Type": "multipart/form-data" },
-        });
-      } else {
-        const response = await axios.post(
-          "https://mernstack2-bq2z.onrender.com/users",
+        await axios.put(
+          `https://mernstack2-bq2z.onrender.com/users/${id}`,
           values,
           {
             headers: { "Content-Type": "multipart/form-data" },
           }
         );
-        console.log(response);
+      } else {
+        axios
+          .post("http://localhost:4400/users", values, {
+            headers: { "Content-Type": "multipart/form-data" },
+          })
+          .then((response) => {
+            console.log(response.data.data);
+            toast.success(response.data.data, {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "dark",
+            });
+            console.log("gjhfjhsdgf");
+            navigate("/");
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       }
-      navigate("/");
     } catch (error) {
       console.error(error);
     }
@@ -266,6 +289,7 @@ const RegistrationForm = () => {
                   </Col>
                 </Row>
                 <Row>
+                  <ToastContainer/>
                   <button type="submit" className="custom-button">
                     {id ? "Update" : "Submit"}
                   </button>

@@ -6,7 +6,8 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 const Userdetail = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState({});
-  const { id } = useParams();
+    const { id } = useParams();
+    
 
   useEffect(() => {
     if (id) {

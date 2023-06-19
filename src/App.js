@@ -2,6 +2,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import RegistrationForm from "./components/addEditform";
 import UserList from "./components/userList";
 import Userdetail from "./components/userdetail";
+import "react-toastify/dist/ReactToastify.css";
+
 function App() {
   return (
     <>

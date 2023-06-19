@@ -3,6 +3,8 @@ import axios from "axios";
 import "./MyButton.css";
 import { Table, Dropdown, Button, Col, Card, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
+
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
