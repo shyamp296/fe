@@ -213,19 +213,17 @@ const UserList = () => {
                 <div>
                   <span>Page:</span>
                   <button
-                    className="bi bi-chevron-left"
+                    className="bi bi-chevron-left btn btn-danger"
                     onClick={() => handlePageChange(page - 1)}
                     disabled={page === 1}
-                  >
-                  </button>
-                  <span>{page}</span>
+                  ></button>
+                  <span className="p-2">{page}</span>
                   <button
-                    className="bi bi-chevron-right"
+                    className="bi bi-chevron-right btn btn-danger"
                     onClick={() => handlePageChange(page + 1)}
                     disabled={page === Math.ceil(total / limit)}
                   ></button>
                 </div>
-                
               </div>
             </Card.Body>
           </Card>
