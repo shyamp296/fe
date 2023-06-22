@@ -209,36 +209,23 @@ const UserList = () => {
                 </tbody>
               </Table>
 
-              <div className="d-flex justify-content-between align-items-center">
+              <div className="d-flex justify-content-end align-items-center">
                 <div>
                   <span>Page:</span>
                   <button
+                    className="bi bi-chevron-left"
                     onClick={() => handlePageChange(page - 1)}
                     disabled={page === 1}
                   >
-                    Previous
                   </button>
                   <span>{page}</span>
                   <button
+                    className="bi bi-chevron-right"
                     onClick={() => handlePageChange(page + 1)}
                     disabled={page === Math.ceil(total / limit)}
-                  >
-                    Next
-                  </button>
+                  ></button>
                 </div>
-                <div>
-                  <span>Items per page:</span>
-                  <select
-                    value={limit}
-                    onChange={(e) =>
-                      handleLimitChange(parseInt(e.target.value))
-                    }
-                  >
-                    <option value={10}>10</option>
-                    <option value={20}>20</option>
-                    <option value={50}>50</option>
-                  </select>
-                </div>
+                
               </div>
             </Card.Body>
           </Card>
