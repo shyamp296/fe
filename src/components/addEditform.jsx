@@ -114,7 +114,7 @@ const RegistrationForm = () => {
           })
           .catch((err) => {
             const message = err.response.data.message;
-            toast.success(message, {
+            toast.error(message, {
               position: "top-right",
               autoClose: 5000,
               hideProgressBar: false,
