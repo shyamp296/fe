@@ -5,11 +5,14 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 
 import App from './App';
+import { ToastContainer } from 'react-toastify';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  
+    <>
+        <ToastContainer/>
     <App />
+  </>
   
 );
 

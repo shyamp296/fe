@@ -33,7 +33,7 @@ const RegistrationForm = () => {
       console.error(error);
     }
   };
-  console.log(user);
+ 
 
   const initialValues = {
     firstname: user?.firstname || "",
@@ -57,19 +57,44 @@ const RegistrationForm = () => {
     status: Yup.string().required("Status is required"),
   });
 
-  const onSubmit = async (values) => {
+  const onSubmit =  (values) => {
     try {
       if (id) {
-        await axios.put(
-          `https://mernstack2-bq2z.onrender.com/users/${id}`,
-          values,
-          {
-            headers: { "Content-Type": "multipart/form-data" },
-          }
-        );
+        
+         axios
+           .put(`https://mernstack2-bq2z.onrender.com/users/${id}`, values, {
+             headers: { "Content-Type": "multipart/form-data" },
+           })
+           .then((res) => {
+             console.log(res.data.message);
+             toast.success(res.data.message, {
+               position: "top-right",
+               autoClose: 5000,
+               hideProgressBar: false,
+               closeOnClick: true,
+               pauseOnHover: true,
+               draggable: true,
+               progress: undefined,
+               theme: "dark",
+             });
+             navigate("/");
+           })
+           .catch((err) => {
+             console.log(err);
+             toast.error(err, {
+               position: "top-right",
+               autoClose: 5000,
+               hideProgressBar: false,
+               closeOnClick: true,
+               pauseOnHover: true,
+               draggable: true,
+               progress: undefined,
+               theme: "dark",
+             });
+           });
       } else {
         axios
-          .post("http://localhost:4400/users", values, {
+          .post("https://mernstack2-bq2z.onrender.com/users", values, {
             headers: { "Content-Type": "multipart/form-data" },
           })
           .then((response) => {
@@ -88,7 +113,17 @@ const RegistrationForm = () => {
             navigate("/");
           })
           .catch((err) => {
-            console.log(err);
+            const message = err.response.data.message;
+            toast.success(message, {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "dark",
+            });
           });
       }
     } catch (error) {

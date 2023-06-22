@@ -4,6 +4,7 @@ import "./MyButton.css";
 import { Table, Dropdown, Button, Col, Card, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 
 const UserList = () => {
@@ -62,11 +63,21 @@ const UserList = () => {
 
   const handleDelete = async (id) => {
     try {
-      console.log("Delete item with ID:", id);
+
       const response = await axios.delete(
         `https://mernstack2-bq2z.onrender.com/users/${id}`
       );
-      console.log(response.data);
+      console.log(response.data.message);
+      toast.success(response.data.message, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
       fetchUsers();
       setUsers((prevUsers) => prevUsers.filter((user) => user._id !== id));
     } catch (error) {
